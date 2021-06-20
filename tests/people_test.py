@@ -48,7 +48,7 @@ def test_delete_a_people():
     # pretty_print(newly_created_user)
     # delete_url = f'{BASE_URI}/{newly_created_user["person_id"]}'
 
-    people = get_user_url(11)
+    people = get_user_url(5)
     response = requests.delete(people)
     assert_that(response.status_code, description="User not found").is_equal_to(requests.codes.ok)
 
