@@ -14,6 +14,8 @@ marshmallow-sqlalchemy = "*"
 marshmallow = "*"
 assertpy = "*"
 pytest = "*"
+lxml = "*"
+cerberus = "*"
 
 [requires]
 python_version = "*"
