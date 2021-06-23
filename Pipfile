@@ -8,6 +8,8 @@ assertpy = "*"
 requests = "*"
 pytest = "*"
 connexion = "*"
+lxml = "*"
+jsonpath-ng = "*"
 
 [dev-packages]
 

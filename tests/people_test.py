@@ -2,7 +2,7 @@ from json import dumps
 from uuid import uuid4
 
 import requests
-from assertpy.assertpy import assert_that
+from assertpy import assert_that, soft_assertions
 
 from config import BASE_URI
 from utils.print_helpers import pretty_print
@@ -10,7 +10,8 @@ from utils.print_helpers import pretty_print
 
 def test_get_all_people():
     response = requests.get(BASE_URI)
-    assert_that(response.status_code).is_equal_to(requests.codes.ok)
+    with soft_assertions():
+        assert_that(response.status_code).is_equal_to(requests.codes.ok)
     response_tet = response.json()
     pretty_print(response_tet)
 
@@ -18,11 +19,12 @@ def test_get_all_people():
 def test_has_people():
     people = get_user_url(4)
     response = requests.get(people)
-    assert_that(response.status_code).is_equal_to(requests.codes.ok)
+    with soft_assertions():
+        assert_that(response.status_code).is_equal_to(requests.codes.ok)
     response_text = response.json()
     pretty_print(response_text)
 
-    #For test
+    # For test
     # assert_that(response_text['lname']).contains('sabbir')
     # last_names = [people['lname'] for people in response_text]
     # assert_that(last_names).contains('sabbir')
@@ -36,12 +38,13 @@ def test_add_people():
     unique_last_name = create_new_people()
     peoples = requests.get(BASE_URI).json()
     is_new_user_created = search_created_user_in(peoples, unique_last_name)
-    assert_that(is_new_user_created, description='User not found').is_not_empty()
+    with soft_assertions():
+        assert_that(is_new_user_created, description='User not found').is_not_empty()
     pretty_print(is_new_user_created)
 
 
 def test_delete_a_people():
-    #For test
+    # For test
     # persons_last_name = create_new_people()
     # peoples = requests.get(BASE_URI).json()
     # newly_created_user = search_created_user_in(peoples, persons_last_name)[0]
@@ -50,7 +53,8 @@ def test_delete_a_people():
 
     people = get_user_url(5)
     response = requests.delete(people)
-    assert_that(response.status_code, description="User not found").is_equal_to(requests.codes.ok)
+    with soft_assertions():
+        assert_that(response.status_code, description="User not found").is_equal_to(requests.codes.ok)
 
     print("People List:")
     all_pep = requests.get(BASE_URI).json()
@@ -66,7 +70,8 @@ def test_update_people():
     })
 
     resource = requests.put(url=person, data=payload, headers=get_header())
-    assert_that(resource.status_code, description="User not updated").is_equal_to(requests.codes.ok)
+    with soft_assertions():
+        assert_that(resource.status_code, description="User not updated").is_equal_to(requests.codes.ok)
     usr = requests.get(person).json()
     pretty_print(usr)
 
@@ -102,7 +107,8 @@ def create_new_people():
 
     # We use requests.post method with keyword params to make the request more readable
     response = requests.post(url=BASE_URI, data=payload, headers=get_header())
-    assert_that(response.status_code, description='Person not created').is_equal_to(requests.codes.no_content)
+    with soft_assertions():
+        assert_that(response.status_code, description='Person not created').is_equal_to(requests.codes.no_content)
     return unique_last_name
 
 
