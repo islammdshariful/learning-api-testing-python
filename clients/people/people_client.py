@@ -2,10 +2,9 @@ from json import dumps
 from uuid import uuid4
 
 from assertpy import soft_assertions, assert_that
-
+from config import get_user_url
 from clients.people.base_client import BaseClient
 from config import BASE_URI
-from tests.people_test import get_user_url
 from utils.request import APIRequest
 
 
@@ -48,7 +47,3 @@ class PeopleClient(BaseClient):
     def delete_person(self, person_id):
         url = f'{BASE_URI}/{person_id}'
         return self.request.delete(url)
-
-    def get_user_url(id):
-        url = f'{BASE_URI}/{id}'
-        return url

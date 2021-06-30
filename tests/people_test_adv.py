@@ -5,19 +5,23 @@ import requests
 
 from clients.people.people_client import PeopleClient
 from tests.assertions.people_assertions import *
-from tests.assertions.schema_validation import assert_schema_validation
+from tests.assertions.schema_validation import *
 from tests.helpers.people_helpers import *
 from utils.print_helpers import pretty_print
 
 client = PeopleClient()
 
 
-def test_read_all_has_person():
+def test_read_all_has_person(logger):
+    """
+     Test on hitting People GET API, we get all user in the list of people
+     """
     response = client.read_all_persons()
     # pretty_print(response.as_dict)
     # pretty_print(response.status_code)
     # pretty_print(response.headers)
     # pretty_print(response.text)
+    logger.info("All User has been read.")
 
     assert_that(response.status_code).is_equal_to(requests.codes.ok)
     assert_people_have_person_with_first_name(response, first_name='Kent')
@@ -50,7 +54,7 @@ def test_get_all_peoples():
 
 
 def test_get_specific_person():
-    person_id = 6
+    person_id = 0
     response = client.read_one_person_by_id(person_id)
     pretty_print(response.as_dict)
 
@@ -90,11 +94,11 @@ def test_read_one_operation_has_expected_schema():
     response = client.read_one_person_by_id(person_id)
     person = json.loads(response.text)
 
-    assert_schema_validation(person)
+    for_one(person)
 
 
 def test_read_all_operation_has_expected_schema():
     response = client.read_all_persons()
     persons = json.loads(response.text)
 
-    assert_schema_validation(persons)
+    for_mutiple(persons)

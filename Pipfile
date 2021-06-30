@@ -1,17 +1,20 @@
 [[source]]
+name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-name = "pypi"
-
-[packages]
-assertpy = "*"
-requests = "*"
-pytest = "*"
-connexion = "*"
-lxml = "*"
-jsonpath-ng = "*"
 
 [dev-packages]
+
+[packages]
+requests = "*"
+pytest = "*"
+assertpy = "*"
+lxml = "*"
+jsonpath-ng = "*"
+cerberus = "*"
+reportportal-client = "*"
+pytest-reportportal = "*"
+pytest-xdist = {extras = ["psutil"], version = "*"}
 
 [requires]
 python_version = "3.9"
